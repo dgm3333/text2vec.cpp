@@ -29,8 +29,8 @@ HashCorpus::HashCorpus(uint32_t size,
   this->ngram_min = ngram_min;
   this->ngram_max = ngram_max;
   this->ngram_delim = "_";
-  dtm = SparseTripletMatrix<int>(0, size);
-  tcm = SparseTripletMatrix<float>(size, size);
+  dtm = SparseTripletMatrix<int>( 0, size );
+  tcm = SparseTripletMatrix<float>( size, size );
   word_count.resize(size);
 }
 

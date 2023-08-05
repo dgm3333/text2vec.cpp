@@ -1,6 +1,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -47,6 +48,7 @@ vector<double> rowMaxs(const vector<vector<double>>& x) {
 vector<vector<double>> euclidean_dist(const vector<vector<double>>& x, const vector<vector<double>>& y) {
   if(x.size() != y.size()) {
     throw std::invalid_argument("Matrices should have same number of rows");
+    __debugbreak();
   }
   vector<vector<double>> res(x[0].size(), vector<double>(y[0].size(), 0));
   double tmp = 0.0;
@@ -63,6 +65,30 @@ vector<vector<double>> euclidean_dist(const vector<vector<double>>& x, const vec
     }
   }
   return res;
+}
+std::vector<std::vector<double>> euclidean_distv2(const std::vector<std::vector<double>>& x, const std::vector<std::vector<double>>& y) {
+    if (x.empty() || y.empty() || x[0].size() != y[0].size()) {
+        throw std::invalid_argument("Matrices should have the same dimensions");
+        __debugbreak();
+    }
+
+    size_t num_rows = x.size();
+    size_t num_cols = x[0].size();
+
+    std::vector<std::vector<double>> res(num_rows, std::vector<double>(num_cols));
+
+    for (size_t i = 0; i < num_rows; ++i) {
+        for (size_t j = 0; j < num_cols; ++j) {
+            double sum_sq_diff = 0.0;
+            for (size_t k = 0; k < num_rows; ++k) {
+                double diff = x[k][i] - y[k][j];
+                sum_sq_diff += diff * diff;
+            }
+            res[i][j] = std::sqrt(sum_sq_diff);
+        }
+    }
+
+    return res;
 }
 
 vector<vector<double>> convert2Rmat(vector<vector<float>>& mat, size_t ncol) {

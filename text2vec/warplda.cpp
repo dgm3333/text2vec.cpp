@@ -51,9 +51,9 @@ public:
     int nr = dims[0];
     int nc = dims[1];
 
-    int *P = PP.data();
-    int *J = JJ.data();
-    double *X = XX.data();
+    const int *P = PP.data();
+    const int *J = JJ.data();
+    const double *X = XX.data();
 
     // append csr
     for(auto r = 0; r < nr; r++) {

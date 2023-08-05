@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <functional>
+#include <cstddef> // for ssize_t
 
 using std::vector;
 
@@ -25,14 +26,16 @@ public:
 	vector<index_t> csc_index_; // length == ncol()+1
 	vector<row_index_t> csc_row_index_; // length == nnz()
 	vector<index_t> csc_val_index_; // length == nnz()
+
+	// desired dimensions - in case empty last columns or rows it will
+	// be different from corpus.nrow(), corpus.ncol()
+	ssize_t n_col_expected = 0;
+	ssize_t n_row_expected = 0;
+
 public:
 	// Sizes
-	ssize_t nrow() const { return static_cast<ssize_t>(csr_index_.size())-1; }
-	ssize_t ncol() const { return static_cast<ssize_t>(csc_index_.size())-1; }
-  // desired dimensions - in case empty last columns or rows it will
-  // be different from corpus.nrow(), corpus.ncol()
-  ssize_t n_col_expected, n_row_expected;
-
+	ssize_t nrow() const { return static_cast<ssize_t>(csr_index_.size()) - 1; }
+	ssize_t ncol() const { return static_cast<ssize_t>(csc_index_.size()) - 1; }
 	size_t nnz() const { return val_.size(); }
 
 	// Const reference

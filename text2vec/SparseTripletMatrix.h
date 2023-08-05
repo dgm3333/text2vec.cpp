@@ -27,6 +27,7 @@
 
 using namespace std;
 
+/*
 namespace std {
   template <>
   struct hash<std::pair<uint32_t, uint32_t>>
@@ -37,7 +38,7 @@ namespace std {
     }
   };
 }
-
+*/
 
 
 //get_sparse_triplet_matrix function includes two arguments for row and column names. This function returns a tuple that consists of:
@@ -70,7 +71,7 @@ public:
     this->sparse_container[make_pair(i, j)] += increment;
   };
 
-  std::tuple<std::vector<uint32_t>, std::vector<uint32_t>, std::vector<T>, std::vector<std::string>, std::vector<std::string>> 
+  std::tuple<std::vector<uint32_t>, std::vector<uint32_t>, std::vector<double>, std::vector<std::string>, std::vector<std::string>>
   get_sparse_triplet_matrix(std::vector<std::string> &rownames, std::vector<std::string> &colnames);
 private:
   uint32_t nrow;
@@ -80,7 +81,7 @@ private:
 };
 
 template<typename T>
-std::tuple<std::vector<uint32_t>, std::vector<uint32_t>, std::vector<T>, std::vector<std::string>, std::vector<std::string>> 
+std::tuple<std::vector<uint32_t>, std::vector<uint32_t>, std::vector<double>, std::vector<std::string>, std::vector<std::string>>
 SparseTripletMatrix<T>::get_sparse_triplet_matrix(std::vector<std::string> &rownames, std::vector<std::string> &colnames) {
   size_t NNZ = this->size();
   std::vector<uint32_t> I(NNZ), J(NNZ);

@@ -39,9 +39,6 @@
     <ClCompile Include="text2vec\PMurHash.c">
       <Filter>text2vec</Filter>
     </ClCompile>
-    <ClCompile Include="text2vec\RcppExports.cpp">
-      <Filter>text2vec</Filter>
-    </ClCompile>
     <ClCompile Include="text2vec\utils.cpp">
       <Filter>text2vec</Filter>
     </ClCompile>

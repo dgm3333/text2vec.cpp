@@ -26,14 +26,15 @@ uint32_t fast_int_hash(uint32_t a) {
   return a;
 }
 
+#include <chrono>
+#include <format>
+
 // Get current date/time, format is YYYY-MM-DD HH:mm:ss
 const std::string currentDateTime() {
-  time_t     now = time(0);
-  struct tm  tstruct;
-  char       buf[80];
-  tstruct = *localtime(&now);
-  strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
-  return buf;
+    auto now = std::chrono::system_clock::now();
+    auto now_t = std::chrono::system_clock::to_time_t(now);
+    auto now_tm = *std::localtime(&now_t);
+    return std::format("{:%Y-%m-%d %T}", now_tm);
 }
 
 std::vector<std::string> stringVectorToStdVector(std::vector<std::string> terms_raw) {

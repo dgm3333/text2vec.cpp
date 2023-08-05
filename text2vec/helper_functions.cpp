@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <iostream>
 #include <unordered_map>
 #include <unordered_set>
 #include <sstream>
@@ -7,6 +8,7 @@
 #include <locale>
 #include <tuple>
 #include "utils.h"
+#include "helper_functions.h"
 
 using namespace std;
 
@@ -18,7 +20,7 @@ string tolower(const string& s) {
 }
 
 // word_tokenizer
-vector<string> word_tokenizer(const string& s, char delim = ' ') {
+vector<string> word_tokenizer(const string& s, char delim) {
     vector<string> tokens;
     stringstream ss(s);
     string item;
@@ -55,7 +57,7 @@ unordered_map<string, int> create_vocabulary(const vector<string>& tokens) {
     }
     return vocab;
 }
-unordered_map<string, int> create_vocabulary(const vector<string>& txt, uint32_t ngram_min, uint32_t ngram_max, std::unordered_set<std::string>& stopwords, const std::string& ngram_delim) {
+std::unordered_map<std::string, int> create_vocabulary(const std::vector<std::string>& txt, uint32_t ngram_min, uint32_t ngram_max, std::unordered_set<std::string>& stopwords, const std::string& ngram_delim) {
     unordered_map<string, int> vocab;
     for (const auto& s : txt) {
         auto tokens = word_tokenizer(tolower(s));
@@ -64,6 +66,21 @@ unordered_map<string, int> create_vocabulary(const vector<string>& txt, uint32_t
             ++vocab[ngram];
         }
     }
+    return vocab;
+}
+std::unordered_map<std::string, int> create_vocabulary(const std::vector<std::pair<std::string, std::string>>& txt_ids, uint32_t ngram_min, uint32_t ngram_max, std::unordered_set<std::string>& stopwords, const std::string& ngram_delim) {
+
+    std::unordered_map<std::string, int> vocab;
+
+    for (const auto& [txt, id] : txt_ids) {
+        auto tokens = word_tokenizer(tolower(txt));
+        auto ngrams = generate_ngrams(tokens, ngram_min, ngram_max, stopwords, ngram_delim);
+
+        for (const auto& ngram : ngrams) {
+            ++vocab[ngram];
+        }
+    }
+
     return vocab;
 }
 
@@ -88,4 +105,59 @@ std::unordered_map<std::string, int> combine_vocabularies(const std::unordered_m
         }
     }
     return vocab_combined;
+}
+
+
+
+size_t get_document_count(const std::unordered_map<std::string, int>& vocab) {
+    return vocab.size();
+}
+int get_document_countv2(const std::unordered_map<std::string, int>& vocab) {
+    int count = 0;
+    for (const auto& [word, word_count] : vocab) {
+        count += word_count;
+    }
+    return count;
+}
+
+std::vector<std::pair<std::string, std::string>> get_test_iterator(const std::vector<std::string>& txt, const std::vector<std::string>& ids) {
+    std::vector<std::pair<std::string, std::string>> result;
+    for (size_t i = 0; i < txt.size() && i < ids.size(); ++i) {
+        auto tokens = word_tokenizer(tolower(txt[i]));
+        for (const auto& token : tokens) {
+            result.push_back(std::make_pair(token, ids[i]));
+        }
+    }
+    return result;
+}
+
+
+
+std::vector<std::pair<std::string, std::string>> get_test_iterator(
+    const std::vector<std::string>& txt,
+    const std::vector<std::string>& ids,
+    PreprocessFunc preprocess_function,
+    TokenizerFunc tokenizer,
+    float& progress) {
+
+    std::vector<std::pair<std::string, std::string>> result;
+    for (size_t i = 0; i < txt.size() && i < ids.size(); ++i) {
+        auto preprocessed_txt = preprocess_function(txt[i]);
+        auto tokens = tokenizer(preprocessed_txt, ' ');
+
+        for (const auto& token : tokens) {
+            result.push_back(std::make_pair(token, ids[i]));
+        }
+
+        if (i % 1000 == 0) {
+            if (progress == -1) {
+                std::cout << "Progress: " << (float)i / (float)txt.size() << "\n";
+            }
+            else {
+                progress = (float)i / (float)txt.size();
+            }
+        }
+    }
+
+    return result;
 }

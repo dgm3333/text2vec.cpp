@@ -19,18 +19,18 @@
 
 Vocabulary* vocab_create(uint32_t ngram_min,
                          uint32_t ngram_max,
-                         const vector<string> stopwords_R,
-                         const string delim,
+                         const std::vector<std::string> stopwords_R,
+                         const std::string delim,
                          int window_size) {
   Vocabulary *v = new Vocabulary(ngram_min, ngram_max, stopwords_R, delim, window_size);
   return v;
 }
 
-void vocabulary_insert_document_batch(Vocabulary* ptr, const vector<vector<string>> document_batch) {
+void vocabulary_insert_document_batch(Vocabulary* ptr, const std::vector<std::vector<std::string>> document_batch) {
   ptr->insert_document_batch(document_batch);
 }
 
-void vocabulary_insert_document_batch_xptr(Vocabulary* ptr, vector<vector<string>>* document_batch_ptr) {
+void vocabulary_insert_document_batch_xptr(Vocabulary* ptr, std::vector<std::vector<std::string>>* document_batch_ptr) {
   ptr->insert_document_batch_ptr(document_batch_ptr);
 }
 

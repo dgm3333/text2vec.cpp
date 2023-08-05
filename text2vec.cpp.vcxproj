@@ -137,7 +137,6 @@
     <ClCompile Include="text2vec\matrix_utils.cpp" />
     <ClCompile Include="text2vec\memory_tools.cpp" />
     <ClCompile Include="text2vec\PMurHash.c" />
-    <ClCompile Include="text2vec\RcppExports.cpp" />
     <ClCompile Include="text2vec\utils.cpp" />
     <ClCompile Include="text2vec\VocabCorpus.cpp" />
     <ClCompile Include="text2vec\Vocabulary.cpp" />
