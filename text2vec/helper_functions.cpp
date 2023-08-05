@@ -40,14 +40,6 @@ vector<string> itoken(const vector<string>& txt) {
 	return tokens;
 }
 
-// split_into
-vector<vector<string>> split_into(const vector<string>& vec, int N) {
-	vector<vector<string>> splits(N);
-	for (size_t i = 0; i < vec.size(); ++i) {
-		splits[i % N].push_back(vec[i]);
-	}
-	return splits;
-}
 
 // create_vocabulary
 unordered_map<string, int> create_vocabulary(const vector<string>& tokens) {
