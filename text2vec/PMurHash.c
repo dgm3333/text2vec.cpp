@@ -71,7 +71,7 @@ on big endian machines, or a byte-by-byte read if the endianess is unknown.
  *
  * READ_UINT32(x)   Read a little endian unsigned 32-bit int
  * UNALIGNED_SAFE   Defined if READ_UINT32 works on non-word boundaries
- * ROTL32(x,r)      Rotate x left by r bits
+ * ROTL32(x,r)	  Rotate x left by r bits
  */
 
 /* Convention is to define __BYTE_ORDER == to one of these values */
@@ -92,19 +92,19 @@ on big endian machines, or a byte-by-byte read if the endianess is unknown.
  * or even _LITTLE_ENDIAN or _BIG_ENDIAN (Note the single _ prefix) */
 #if !defined(__BYTE_ORDER)
   #if defined(__LITTLE_ENDIAN__) && __LITTLE_ENDIAN__==1 || defined(_LITTLE_ENDIAN) && _LITTLE_ENDIAN==1
-    #define __BYTE_ORDER __LITTLE_ENDIAN
+	#define __BYTE_ORDER __LITTLE_ENDIAN
   #elif defined(__BIG_ENDIAN__) && __BIG_ENDIAN__==1 || defined(_BIG_ENDIAN) && _BIG_ENDIAN==1
-    #define __BYTE_ORDER __BIG_ENDIAN
+	#define __BYTE_ORDER __BIG_ENDIAN
   #endif
 #endif
 
 /* gcc (usually) defines xEL/EB macros for ARM and MIPS endianess */
 #if !defined(__BYTE_ORDER)
   #if defined(__ARMEL__) || defined(__MIPSEL__)
-    #define __BYTE_ORDER __LITTLE_ENDIAN
+	#define __BYTE_ORDER __LITTLE_ENDIAN
   #endif
   #if defined(__ARMEB__) || defined(__MIPSEB__)
-    #define __BYTE_ORDER __BIG_ENDIAN
+	#define __BYTE_ORDER __BIG_ENDIAN
   #endif
 #endif
 
@@ -115,11 +115,11 @@ on big endian machines, or a byte-by-byte read if the endianess is unknown.
 #elif __BYTE_ORDER==__BIG_ENDIAN
   /* TODO: Add additional cases below where a compiler provided bswap32 is available */
   #if defined(__GNUC__) && (__GNUC__>4 || (__GNUC__==4 && __GNUC_MINOR__>=3))
-    #define READ_UINT32(ptr)   (__builtin_bswap32(*((uint32_t*)(ptr))))
+	#define READ_UINT32(ptr)   (__builtin_bswap32(*((uint32_t*)(ptr))))
   #else
-    /* Without a known fast bswap32 we're just as well off doing this */
-    #define READ_UINT32(ptr)   (ptr[0]|ptr[1]<<8|ptr[2]<<16|ptr[3]<<24)
-    #define UNALIGNED_SAFE
+	/* Without a known fast bswap32 we're just as well off doing this */
+	#define READ_UINT32(ptr)   (ptr[0]|ptr[1]<<8|ptr[2]<<16|ptr[3]<<24)
+	#define UNALIGNED_SAFE
   #endif
 #else
   /* Unknown endianess so last resort is to read individual bytes */
@@ -148,28 +148,28 @@ on big endian machines, or a byte-by-byte read if the endianess is unknown.
 /* This is the main processing body of the algorithm. It operates
  * on each full 32-bits of input. */
 #define DOBLOCK(h1, k1) do{ \
-        k1 *= C1; \
-        k1 = ROTL32(k1,15); \
-        k1 *= C2; \
-        \
-        h1 ^= k1; \
-        h1 = ROTL32(h1,13); \
-        h1 = h1*5+0xe6546b64; \
-    }while(0)
+		k1 *= C1; \
+		k1 = ROTL32(k1,15); \
+		k1 *= C2; \
+		\
+		h1 ^= k1; \
+		h1 = ROTL32(h1,13); \
+		h1 = h1*5+0xe6546b64; \
+	}while(0)
 
 
 /* Append unaligned bytes to carry, forcing hash churn if we have 4 bytes */
 /* cnt=bytes to process, h1=name of h1 var, c=carry, n=bytes in c, ptr/len=payload */
 #define DOBYTES(cnt, h1, c, n, ptr, len) do{ \
-    int _i = cnt; \
-    while(_i--) { \
-        c = c>>8 | *ptr++<<24; \
-        n++; len--; \
-        if(n==4) { \
-            DOBLOCK(h1, c); \
-            n = 0; \
-        } \
-    } }while(0)
+	int _i = cnt; \
+	while(_i--) { \
+		c = c>>8 | *ptr++<<24; \
+		n++; len--; \
+		if(n==4) { \
+			DOBLOCK(h1, c); \
+			n = 0; \
+		} \
+	} }while(0)
 
 /*---------------------------------------------------------------------------*/
 
@@ -192,14 +192,14 @@ void PMurHash32_Process(uint32_t *ph1, uint32_t *pcarry, const void *key, int le
   /* Consume any carry bytes */
   int i = (4-n) & 3;
   if(i && i <= len) {
-    DOBYTES(i, h1, c, n, ptr, len);
+	DOBYTES(i, h1, c, n, ptr, len);
   }
 
   /* Process 32-bit chunks */
   end = ptr + len/4*4;
   for( ; ptr < end ; ptr+=4) {
-    uint32_t k1 = READ_UINT32(ptr);
-    DOBLOCK(h1, k1);
+	uint32_t k1 = READ_UINT32(ptr);
+	DOBLOCK(h1, k1);
   }
 
 #else /*UNALIGNED_SAFE*/
@@ -208,41 +208,41 @@ void PMurHash32_Process(uint32_t *ph1, uint32_t *pcarry, const void *key, int le
   /* Consume enough so that the next data byte is word aligned */
   int i = -(long)ptr & 3;
   if(i && i <= len) {
-      DOBYTES(i, h1, c, n, ptr, len);
+	  DOBYTES(i, h1, c, n, ptr, len);
   }
 
   /* We're now aligned. Process in aligned blocks. Specialise for each possible carry count */
   end = ptr + len/4*4;
   switch(n) { /* how many bytes in c */
-  case 0: /* c=[----]  w=[3210]  b=[3210]=w            c'=[----] */
-    for( ; ptr < end ; ptr+=4) {
-      uint32_t k1 = READ_UINT32(ptr);
-      DOBLOCK(h1, k1);
-    }
-    break;
+  case 0: /* c=[----]  w=[3210]  b=[3210]=w			c'=[----] */
+	for( ; ptr < end ; ptr+=4) {
+	  uint32_t k1 = READ_UINT32(ptr);
+	  DOBLOCK(h1, k1);
+	}
+	break;
   case 1: /* c=[0---]  w=[4321]  b=[3210]=c>>24|w<<8   c'=[4---] */
-    for( ; ptr < end ; ptr+=4) {
-      uint32_t k1 = c>>24;
-      c = READ_UINT32(ptr);
-      k1 |= c<<8;
-      DOBLOCK(h1, k1);
-    }
-    break;
+	for( ; ptr < end ; ptr+=4) {
+	  uint32_t k1 = c>>24;
+	  c = READ_UINT32(ptr);
+	  k1 |= c<<8;
+	  DOBLOCK(h1, k1);
+	}
+	break;
   case 2: /* c=[10--]  w=[5432]  b=[3210]=c>>16|w<<16  c'=[54--] */
-    for( ; ptr < end ; ptr+=4) {
-      uint32_t k1 = c>>16;
-      c = READ_UINT32(ptr);
-      k1 |= c<<16;
-      DOBLOCK(h1, k1);
-    }
-    break;
+	for( ; ptr < end ; ptr+=4) {
+	  uint32_t k1 = c>>16;
+	  c = READ_UINT32(ptr);
+	  k1 |= c<<16;
+	  DOBLOCK(h1, k1);
+	}
+	break;
   case 3: /* c=[210-]  w=[6543]  b=[3210]=c>>8|w<<24   c'=[654-] */
-    for( ; ptr < end ; ptr+=4) {
-      uint32_t k1 = c>>8;
-      c = READ_UINT32(ptr);
-      k1 |= c<<24;
-      DOBLOCK(h1, k1);
-    }
+	for( ; ptr < end ; ptr+=4) {
+	  uint32_t k1 = c>>8;
+	  c = READ_UINT32(ptr);
+	  k1 |= c<<24;
+	  DOBLOCK(h1, k1);
+	}
   }
 #endif /*UNALIGNED_SAFE*/
 
@@ -265,8 +265,8 @@ uint32_t PMurHash32_Result(uint32_t h, uint32_t carry, uint32_t total_length)
   uint32_t k1;
   int n = carry & 3;
   if(n) {
-    k1 = carry >> (4-n)*8;
-    k1 *= C1; k1 = ROTL32(k1,15); k1 *= C2; h ^= k1;
+	k1 = carry >> (4-n)*8;
+	k1 *= C1; k1 = ROTL32(k1,15); k1 *= C2; h ^= k1;
   }
   h ^= total_length;
 
@@ -301,11 +301,11 @@ void PMurHash32_test(const void *key, int len, uint32_t seed, void *out)
 
 #if 0 /* Exercise the progressive processing */
   while(ptr < end) {
-    //const uint8_t *mid = ptr + rand()%(end-ptr)+1;
-    const uint8_t *mid = ptr + (rand()&0xF);
-    mid = mid<end?mid:end;
-    PMurHash32_Process(&h1, &carry, ptr, mid-ptr);
-    ptr = mid;
+	//const uint8_t *mid = ptr + rand()%(end-ptr)+1;
+	const uint8_t *mid = ptr + (rand()&0xF);
+	mid = mid<end?mid:end;
+	PMurHash32_Process(&h1, &carry, ptr, mid-ptr);
+	ptr = mid;
   }
 #else
   PMurHash32_Process(&h1, &carry, ptr, (int)(end-ptr));

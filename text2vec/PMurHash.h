@@ -1,3 +1,5 @@
+#pragma once
+
 /*-----------------------------------------------------------------------------
  * MurmurHash3 was written by Austin Appleby, and is placed in the public
  * domain.
@@ -21,7 +23,7 @@
 
 /* If the compiler says it's C99 then take its word for it */
 #if !defined(MH_UINT32) && ( \
-     defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L )
+	 defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L )
   #include <stdint.h>
   #define MH_UINT32 uint32_t
 #endif
@@ -30,11 +32,11 @@
 #if !defined(MH_UINT32)
   #include  <limits.h>
   #if   (USHRT_MAX == 0xffffffffUL)
-    #define MH_UINT32 unsigned short
+	#define MH_UINT32 unsigned short
   #elif (UINT_MAX == 0xffffffffUL)
-    #define MH_UINT32 unsigned int
+	#define MH_UINT32 unsigned int
   #elif (ULONG_MAX == 0xffffffffUL)
-    #define MH_UINT32 unsigned long
+	#define MH_UINT32 unsigned long
   #endif
 #endif
 

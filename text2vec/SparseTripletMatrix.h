@@ -1,3 +1,5 @@
+#pragma once
+
 // SparseTripletMatrix.h
 // Copyright (C) 2015 - 2016  Dmitriy Selivanov
 // This file is part of text2vec
@@ -27,18 +29,19 @@
 
 using namespace std;
 
-/*
-namespace std {
-  template <>
-  struct hash<std::pair<uint32_t, uint32_t>>
-  {
-    inline uint64_t operator()(const std::pair<uint32_t, uint32_t>& k) const
-    {
-      return (uint64_t) k.first << 32 | k.second;
-    }
-  };
-}
-*/
+using S4 = std::tuple<std::vector<int32_t>, std::vector<int32_t>, std::vector<double>, std::vector<std::string>, std::vector<std::string>>;
+
+
+template <>
+struct hash<std::pair<uint32_t, uint32_t>>
+{
+	inline uint64_t operator()(const std::pair<uint32_t, uint32_t>& k) const
+	{
+		return (uint64_t) k.first << 32 | k.second;
+	}
+};
+
+
 
 
 //get_sparse_triplet_matrix function includes two arguments for row and column names. This function returns a tuple that consists of:
@@ -52,48 +55,49 @@ namespace std {
 template<typename T>
 class SparseTripletMatrix {
 public:
-  SparseTripletMatrix():
-    nrow(0), ncol(0), nnz(0) {};
+	SparseTripletMatrix():
+		nrow(0), ncol(0), nnz(0) {};
 
-  SparseTripletMatrix(uint32_t nrow, uint32_t ncol):
-    nrow(nrow), ncol(ncol), nnz(0) {};
+	SparseTripletMatrix(size_t nrow, size_t ncol):
+		nrow(nrow), ncol(ncol), nnz(0) {};
 
-  inline void increment_nrows() {this->nrow++;};
-  inline void increment_ncols() {this->ncol++;};
+	inline void increment_nrows() {this->nrow++;};
+	inline void increment_ncols() {this->ncol++;};
 
-  inline uint32_t nrows() {return this->nrow;};
-  inline uint32_t ncols() {return this->ncol;};
-  inline size_t size() {
-      return(this->sparse_container.size());
-  }
-  void clear() { this->sparse_container.clear(); };
-  void add(uint32_t i, uint32_t j, T increment) {
-    this->sparse_container[make_pair(i, j)] += increment;
-  };
+	inline uint32_t nrows() { return this->nrow;  };
+	inline uint32_t ncols() { return this->ncol;  };
+	inline size_t size()	{ return(this->sparse_container.size());   }
+	void clear() { this->sparse_container.clear(); };
+	void add(uint32_t i, uint32_t j, T increment) {
+		this->sparse_container[make_pair(i, j)] += increment;	   // add / increment elements
+	};
 
-  std::tuple<std::vector<uint32_t>, std::vector<uint32_t>, std::vector<double>, std::vector<std::string>, std::vector<std::string>>
-  get_sparse_triplet_matrix(std::vector<std::string> &rownames, std::vector<std::string> &colnames);
+	S4 get_sparse_triplet_matrix(std::vector<std::string>& rownames, std::vector<std::string>& colnames);
+
 private:
-  uint32_t nrow;
-  uint32_t ncol;
-  size_t nnz;
-  std::unordered_map< pair<uint32_t, uint32_t>, T> sparse_container;
+	size_t nrow;
+	size_t ncol;
+	size_t nnz;
+	std::unordered_map< pair<uint32_t, uint32_t>, T> sparse_container;
 };
 
-template<typename T>
-std::tuple<std::vector<uint32_t>, std::vector<uint32_t>, std::vector<double>, std::vector<std::string>, std::vector<std::string>>
-SparseTripletMatrix<T>::get_sparse_triplet_matrix(std::vector<std::string> &rownames, std::vector<std::string> &colnames) {
-  size_t NNZ = this->size();
-  std::vector<uint32_t> I(NNZ), J(NNZ);
-  std::vector<T> X(NNZ);
 
-  size_t n = 0;
-  for(auto it : sparse_container) {
-    I[n] = it.first.first;
-    J[n] = it.first.second;
-    X[n] = it.second;
-    n++;
-  }
+template<typename T> S4 SparseTripletMatrix<T>::get_sparse_triplet_matrix(std::vector<std::string> &rownames, std::vector<std::string> &colnames) {
 
-  return std::make_tuple(I, J, X, rownames, colnames);
+	size_t NNZ = this->size();
+
+	// index vectors
+	std::vector<int32_t> I(NNZ), J(NNZ);	  //IntegerVector
+	// value vector
+	std::vector<double> X(NNZ);			   //NumericVector
+
+	size_t n = 0;
+	for(auto it : sparse_container) {
+		I[n] = it.first.first;
+		J[n] = it.first.second;
+		X[n] = it.second;
+		n++;
+	}
+
+	return std::make_tuple(I, J, X, rownames, colnames);
 }

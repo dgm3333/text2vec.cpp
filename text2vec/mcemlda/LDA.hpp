@@ -113,17 +113,17 @@ public:
 					(C_all[z.old_z] + beta_bar)/(C_all[z.new_z] + beta_bar);
 				if(rng.drand() < accept_prob) {
 				  if(update_topics) {
-				    C_word.at(w, z.new_z) ++;
-				    C_word.at(w, z.old_z) --;
+					C_word.at(w, z.new_z) ++;
+					C_word.at(w, z.old_z) --;
 
-				    C_all[z.new_z] ++;
-				    C_all[z.old_z] --;
+					C_all[z.new_z] ++;
+					C_all[z.old_z] --;
 
-				    C_local_diff[z.new_z] ++;
-				    C_local_diff[z.old_z] --;
+					C_local_diff[z.new_z] ++;
+					C_local_diff[z.old_z] --;
 
-				    C_local[z.new_z] ++;
-				    C_local[z.old_z] --;
+					C_local[z.new_z] ++;
+					C_local[z.old_z] --;
 				  }
 					z.old_z = z.new_z;
 				}
@@ -167,14 +167,14 @@ public:
 				if(rng.drand() < accept_prob) {
 				  if(update_topics) {
 
-				    C_all[z.new_z] ++;
-				    C_all[z.old_z] --;
+					C_all[z.new_z] ++;
+					C_all[z.old_z] --;
 
-				    C_local_diff[z.new_z] ++;
-				    C_local_diff[z.old_z] --;
+					C_local_diff[z.new_z] ++;
+					C_local_diff[z.old_z] --;
 
-				    C_local[z.new_z] ++;
-				    C_local[z.old_z] --;
+					C_local[z.new_z] ++;
+					C_local[z.old_z] --;
 				  }
 					z.old_z = z.new_z;
 				}

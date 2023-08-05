@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef __PMURHASH_H__
 #define __PMURHASH_H__
 
