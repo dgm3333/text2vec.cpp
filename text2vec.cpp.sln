@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "text2vec.cpp", "text2vec.cpp.vcxproj", "{43343C0C-ECB5-470B-8390-841B24BCBEBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43343C0C-ECB5-470B-8390-841B24BCBEBE}.Debug|x64.ActiveCfg = Debug|x64
+		{43343C0C-ECB5-470B-8390-841B24BCBEBE}.Debug|x64.Build.0 = Debug|x64
+		{43343C0C-ECB5-470B-8390-841B24BCBEBE}.Debug|x86.ActiveCfg = Debug|Win32
+		{43343C0C-ECB5-470B-8390-841B24BCBEBE}.Debug|x86.Build.0 = Debug|Win32
+		{43343C0C-ECB5-470B-8390-841B24BCBEBE}.Release|x64.ActiveCfg = Release|x64
+		{43343C0C-ECB5-470B-8390-841B24BCBEBE}.Release|x64.Build.0 = Release|x64
+		{43343C0C-ECB5-470B-8390-841B24BCBEBE}.Release|x86.ActiveCfg = Release|Win32
+		{43343C0C-ECB5-470B-8390-841B24BCBEBE}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE5DB72E-8611-4EA1-9F33-C7D6349CEBAF}
+	EndGlobalSection
+EndGlobal

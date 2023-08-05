@@ -36,7 +36,7 @@ const std::string currentDateTime() {
   return buf;
 }
 
-std::vector<std::string> stringVectorToStdVector(vector<string> terms_raw) {
+std::vector<std::string> stringVectorToStdVector(std::vector<std::string> terms_raw) {
   std::vector<std::string> result;
   result.reserve(terms_raw.size());
   for (auto it: terms_raw) {
@@ -45,10 +45,10 @@ std::vector<std::string> stringVectorToStdVector(vector<string> terms_raw) {
   return(result);
 }
 
-vector<string> generate_ngrams(const std::vector< std::string> &terms,
+std::vector<std::string> generate_ngrams(const std::vector< std::string> &terms,
                                const uint32_t ngram_min,
                                const uint32_t ngram_max,
-                               unordered_set<string> &stopwords,
+                               std::unordered_set<std::string> &stopwords,
                                const string ngram_delim) {
   uint32_t len = terms.size();
   vector<string> ngrams;
@@ -98,7 +98,7 @@ std::vector<std::string> fixed_char_tokenizer(const std::string &s, char delim) 
   return elems;
 }
 
-std::vector<std::vector < std::string> > cpp_fixed_char_tokenizer(vector<string> x, char delim) {
+std::vector<std::vector < std::string> > cpp_fixed_char_tokenizer(std::vector<std::string> x, char delim) {
   std::vector<std::string> docs = stringVectorToStdVector(x);
   std::vector<std::vector < std::string> > tokens;
   tokens.reserve(x.size());

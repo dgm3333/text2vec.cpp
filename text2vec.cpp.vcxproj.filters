@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="text2vec">
+      <UniqueIdentifier>{8fcdee1c-2a2a-407e-8522-6727754b4e5e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\collocations.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\HashCorpus.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\helper_functions.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\matrix_utils.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\memory_tools.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\PMurHash.c">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\RcppExports.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\utils.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\VocabCorpus.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\Vocabulary.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+    <ClCompile Include="text2vec\warplda.cpp">
+      <Filter>text2vec</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="text2vec\Corpus.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\HashCorpus.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\helper_functions.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\PMurHash.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\pmurhashAPI.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\SparseTripletMatrix.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\text2vec.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\VocabCorpus.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\Vocabulary.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\mcemlda\AliasUrn.hpp">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\mcemlda\DenseMat.hpp">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\mcemlda\Heap.hpp">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\mcemlda\include\qrand.hpp">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\mcemlda\LDA.hpp">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\mcemlda\SparseMat.hpp">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+    <ClInclude Include="text2vec\utils.h">
+      <Filter>text2vec</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
