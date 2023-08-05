@@ -6,3 +6,5 @@
 /x64/Debug/text2vec.cpp_MD.tlog
 /x64/Debug
 /.vs/text2vec.cpp/FileContentIndex
+/x64/Release
+/text2vec.cpp.vcxproj
